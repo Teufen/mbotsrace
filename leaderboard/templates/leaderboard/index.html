@@ -1,0 +1,23 @@
+{% load static %}
+
+<body>
+<h2>Leaderboard</h2>
+{% if leaderboard %}
+	<table>
+        <tr><th>#</th><th>Player</th><th>Beste Lap</th></tr>
+	{% for lap in leaderboard %}
+        <tr>
+            <td>{{ forloop.counter0 }}</td>
+			<td>{{ lap.player.nickname }}</td>
+            <td align="right">{{ lap.elapsedtime|date:"i:s" }}</td>
+		</tr>
+	{% endfor %}
+		
+	</table>
+{% else %}
+<p>No laps have been run yet.</p>
+{% endif %}
+
+
+</body>
+
