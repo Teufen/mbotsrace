@@ -1,0 +1,43 @@
+{% load static %}
+
+<script src="{% static "leaderboard/jquery-3.3.1.min.js" %}"></script>
+<script src = "{% static "leaderboard/admin.js" %}" ></script>
+
+<body>
+    <h2>Leaderboard</h2>
+    <table>
+        <tr>
+            <th colspan="4">Players</th>
+        </tr>
+        <tr>
+            <th>Nickname</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th></th>
+        </tr>
+        <tbody id="players">
+        {% for player in leaderboard %}
+        <tr>
+            <td>{{ player.nickname }}</td>
+            <td>{{ player.firstname }}</td>
+            <td>{{ player.lastname }}</td>
+            <td></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <h3>Add new player</h3>
+    <form id="addPlayer" action="#">
+        <table>
+            <tr>
+                <td><input name="nickname" placeholder="Nickname"></td>
+                <td><input name="firstname" placeholder="First Name"></td>
+                <td><input name="lastname" placeholder="Last Name"></td>
+                <td><input type="submit" value="Add player"></td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+

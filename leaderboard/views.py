@@ -26,6 +26,17 @@ class IndexView(generic.ListView):
         return tmplst
 
 
+class AdminView(generic.ListView):
+    template_name = 'leaderboard/admin.html'
+    context_object_name = 'leaderboard'
+
+    def get_queryset(self):
+        plyrlst = []
+        for player in Player.objects.all():
+            plyrlst.append(player)
+
+        return plyrlst
+
 @csrf_exempt
 def create_lap(request):
     try:
