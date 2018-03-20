@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
-from django.db.models import Min
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Player, Lap
 
@@ -23,3 +24,48 @@ class IndexView(generic.ListView):
                 tmplst.append(lap)
 
         return tmplst
+
+
+@csrf_exempt
+def create_lap(request):
+    try:
+        player = Player.objects.get(pk=request.POST['player'])
+        time = request.POST['time']
+    except KeyError:
+        dD = {'result': 'failed',
+              }
+
+        return HttpResponse(str(dD))
+
+    lap = Lap(player=player, elapsedtime=time)
+    lap.save()
+
+    dD = {'result': 'succes',
+          'created_pk': str(lap.pk)
+          }
+
+    return HttpResponse(str(dD))
+
+
+@csrf_exempt
+def create_player(request):
+    try:
+        nickname = request.POST['nickname']
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+    except KeyError:
+        dD = {'result': 'failed',
+              }
+
+        return HttpResponse(str(dD))
+
+    player = Player(nickname=nickname,
+                    firstname=firstname,
+                    lastname=lastname)
+    player.save()
+
+    dD = {'result': 'succes',
+          'created_pk': str(player.pk)
+          }
+
+    return HttpResponse(str(dD))
