@@ -1,6 +1,28 @@
 {% load static %}
 
+<head>
+	<meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'leaderboard/stopwatch.css' %}" />
+    <script type="text/javascript" src='{% static 'leaderboard/stopwatch.js' %}'></script>
+</head>
+
 <body>
+
+	<div id='timer'>00:00:00:00</div>
+	<div id='labels'>
+		<span id='hh'>Hours</span>
+		<span id='mm'>Minutes</span>
+		<span id='ss'>Seconds</span>
+		<span id='ms'>Centiseconds</span>
+	</div>
+
+	<div id='controls'>
+		<button onclick='startTimer()' id='go'>Go</button>
+		<button onclick='stopTimer()'  id='stop'>Stop</button>
+		<button onclick='clearTimer()' id='clear'>Clear</button>
+	</div>
+    <br />
+    <br />
 <h2>Leaderboard</h2>
 {% if leaderboard %}
 	<table>
