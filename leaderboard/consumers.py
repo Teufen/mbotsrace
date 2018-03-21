@@ -6,7 +6,6 @@ import json
 
 import threading
 
-
 class LeaderboardConsumer(WebsocketConsumer):
 
     t1 = 1
@@ -74,10 +73,10 @@ channel_layer = get_channel_layer()
 
 def run_background_process():
     # perform complex calculation depending on parameter from simple calculation
-    test = True
+    start = True
     while True:
-        test = not test
-        result = pollButton(test)
+        result = pollButton(start)
+        start = not start
         # update frontend via websocket
         async_to_sync(channel_layer.group_send)("leaderboard", {
             "type": "poll_message",
