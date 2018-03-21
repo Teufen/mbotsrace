@@ -74,18 +74,22 @@ channel_layer = get_channel_layer()
 
 def run_background_process():
     # perform complex calculation depending on parameter from simple calculation
+    test = True
     while True:
-        result = pollButton()
+        test = not test
+        result = pollButton(test)
         # update frontend via websocket
         async_to_sync(channel_layer.group_send)("leaderboard", {
             "type": "poll_message",
-            "text": json.dumps({
+            "text": {
                 "result": result,
-            })
+            }
         })
 
 
-def pollButton():
+def pollButton(test):
     time.sleep(5)
-    return 'start'
-
+    if test:
+        return 'start'
+    else:
+        return 'stop'
