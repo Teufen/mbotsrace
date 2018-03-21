@@ -7,9 +7,7 @@ $(function(){
         '/ws/leaderboard');
 
     leaderboardSocket.onmessage = function(e) {
-        var data = JSON.parse(e.data);
-        var message = data['message'];
-        console.log(message);
+        console.log(e);
     };
 
     leaderboardSocket.onclose = function(e) {
