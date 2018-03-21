@@ -1,26 +1,28 @@
 {% load static %}
 
-<script src="{% static "leaderboard/jquery-3.3.1.min.js" %}"></script>
-<script src="{% static "leaderboard/app.js" %}"></script>
+<script src="{% static "leaderboard/js/jquery-3.3.1.min.js" %}"></script>
+<script src="{% static "leaderboard/js/app.js" %}"></script>
+<link rel="stylesheet" href="{% static "leaderboard/css/style.css" %}"/>
 
 <body>
+<div class="container">
 <h2>Leaderboard</h2>
+    <div id="laps">
 {% if leaderboard %}
 	<table>
-        <tr><th>#</th><th>Player</th><th>Beste Lap</th></tr>
+        <!--<tr><th>#</th><th>Player</th><th>Beste Lap</th></tr>-->
 	{% for lap in leaderboard %}
-        <tr>
-            <td>{{ forloop.counter0 }}</td>
+        <tr class="effect">
+            <!--<td>{{ forloop.counter0 }}</td>-->
 			<td>{{ lap.player.nickname }}</td>
             <td align="right">{{ lap.elapsedtime|date:"i:s" }}</td>
 		</tr>
 	{% endfor %}
-		
 	</table>
 {% else %}
 <p>No laps have been run yet.</p>
 {% endif %}
-
-
+</div>
+</div>
 </body>
 
