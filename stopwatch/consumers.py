@@ -73,8 +73,8 @@ class LeaderboardConsumer(WebsocketConsumer):
 def poll_button(test):
     input_state = GPIO.input(18)
     if input_state == False:
+        time.sleep(1.2)
         print('Button pressed')
-        time.sleep(0.2)
 
         if test:
             print('send result: start')
