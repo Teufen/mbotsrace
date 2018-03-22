@@ -4,6 +4,9 @@ import time
 from channels.generic.websocket import WebsocketConsumer
 import json
 import threading
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
@@ -68,11 +71,14 @@ class LeaderboardConsumer(WebsocketConsumer):
             })
 
 def poll_button(test):
-    print('start 5 seconds:',test)
-    time.sleep(5)
-    if test:
-        print('send result: start')
-        return 'start'
-    else:
-        print('send result: stop')
-        return 'stop'
+    input_state = GPIO.input(18)
+    if input_state == False:
+        print('Button pressed')
+        time.sleep(0.2)
+
+        if test:
+            print('send result: start')
+            return 'start'
+        else:
+            print('send result: stop')
+            return 'stop'
