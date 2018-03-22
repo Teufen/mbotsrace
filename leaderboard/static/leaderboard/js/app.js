@@ -18,8 +18,18 @@ $(function(){
 
     leaderboardSocket.onmessage = function(e) {
 
+        var res = JSON.parse(e.data).message.text.result;
+
         console.log(JSON.parse(e.data).message.text.result,(new Date())-t);
         t = new Date();
+
+        if(res === 'start'){
+            clearTimer();
+            startTimer();
+        }else if(res === 'stop'){
+            stopTimer();
+        }
+
     };
 
     leaderboardSocket.onclose = function(e) {
