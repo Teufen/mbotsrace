@@ -48,7 +48,12 @@ def create_lap(request):
 
         return HttpResponse(str(dD))
 
-    lap = Lap(player=player, elapsedtime=time)
+    con_sec, con_min, con_hour = convertMillis(int(time))
+    print("{0}:{1}:{2}".format(con_hour, con_min, con_sec))
+
+    newTime = "{0}:{1}:{2}".format(int(con_hour), int(con_min), con_sec)
+
+    lap = Lap(player=player, elapsedtime=newTime)
     lap.save()
 
     dD = {'result': 'succes',
@@ -57,6 +62,12 @@ def create_lap(request):
 
     return HttpResponse(str(dD))
 
+
+def convertMillis(millis):
+     seconds=(millis/1000)%60
+     minutes=(millis/(1000*60))%60
+     hours=(millis/(1000*60*60))%24
+     return seconds, minutes, hours
 
 @csrf_exempt
 def create_player(request):

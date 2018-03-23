@@ -31,7 +31,7 @@ class LeaderboardConsumer(WebsocketConsumer):
 
         print('new connection',LeaderboardConsumer.t1.isAlive())
 
-        # LeaderboardConsumer.stopped = False
+        LeaderboardConsumer.stopped = False
         if not LeaderboardConsumer.t1.isAlive():
             LeaderboardConsumer.t1 = threading.Thread(target=self.run_background_process)
             LeaderboardConsumer.t1.setDaemon(True)
@@ -76,8 +76,8 @@ class LeaderboardConsumer(WebsocketConsumer):
     def run_background_process():
         # perform complex calculation depending on parameter from simple calculation
         start = True
-        # while LeaderboardConsumer.stopped == False:
-        while True:
+        while LeaderboardConsumer.stopped == False:
+        #while True:
             result = poll_button(start)
             start = not start
             # update frontend via websocket
@@ -87,6 +87,7 @@ class LeaderboardConsumer(WebsocketConsumer):
                     "result": result,
                 }
             })
+
 
 def poll_button(test):
     input_state = GPIO.input(18)

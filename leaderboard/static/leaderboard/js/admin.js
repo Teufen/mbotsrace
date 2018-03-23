@@ -1,5 +1,8 @@
 $(function(){
 
+    var time = 0;
+    var currentPlayer = null;
+
    var $form = $('form#addPlayer');
    var $players = $('tbody#players');
 
@@ -29,6 +32,16 @@ $(function(){
         if(m.message.type === 'name_message'){
 
             console.log(m.message.text.result);
+        }else if(m.message.type === 'poll_message'){
+
+            var res = m.message.text.result;
+
+            if(res === 'start'){
+                clearTimer();
+                startTimer();
+            }else if(res === 'stop'){
+                stopTimer();
+            }
         }
 
         //console.log(JSON.parse(e.data).message.text.result);
@@ -38,13 +51,13 @@ $(function(){
         console.error('Leaderboard socket closed unexpectedly');
     };
 
-    $('[name=selectPlayer]').click(function(evt){
+    $('body').on('click','[name=selectPlayer]',function(evt){
 
         $('td:first-child').text('');
 
         $('[value=state_'+$(evt.target).data('id')+']').text('*');
 
-        console.log();
+        currentPlayer = $(evt.target).data('id');
 
         leaderboardSocket.send(JSON.stringify({
             type: 'name_message',
@@ -54,5 +67,37 @@ $(function(){
             }
         }));
     });
+
+    function clearTimer(){
+        time = 0;
+        console.log(time);
+    }
+
+    function startTimer(){
+        time = new Date();
+        console.log(time);
+    }
+
+    function stopTimer(){
+        var current = new Date();
+        var f = current - time;
+        console.log(f);
+
+        addNewLap(f);
+    }
+
+    function addNewLap(time){
+
+        if(!(currentPlayer === null || time === 0)) {
+            var d = {
+                player: currentPlayer,
+                time: time
+            };
+
+            $.post('/leaderboard/api/lap/new/', d, function (res) {
+                console.log(res);
+            });
+        }
+    }
 
 });

@@ -17,7 +17,7 @@
         <tr class="effect">
             <!--<td>{{ forloop.counter0 }}</td>-->
 			<td>{{ lap.player.nickname }}</td>
-            <td align="right">{{ lap.elapsedtime|date:"i:s" }}</td>
+            <td align="right">{{ lap.elapsedtime|date:"i:s.u" }}</td>
 		</tr>
 	{% endfor %}
 	</table>
