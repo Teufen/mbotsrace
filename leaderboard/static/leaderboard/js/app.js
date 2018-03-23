@@ -18,17 +18,30 @@ $(function(){
 
     leaderboardSocket.onmessage = function(e) {
 
-        var res = JSON.parse(e.data).message.text.result;
+        var m = JSON.parse(e.data);
 
-        console.log(JSON.parse(e.data).message.text.result,(new Date())-t);
-        t = new Date();
+        if(m.message.type === 'name_message'){
 
-        if(res === 'start'){
-            clearTimer();
-            startTimer();
-        }else if(res === 'stop'){
-            stopTimer();
+            console.log(m.message.text.result);
+
+            $('#status_name').text(m.message.text.result.name)
+
+        }else if(m.message.type === 'poll_message'){
+
+            console.log(m.message.text.result,(new Date())-t);
+            t = new Date();
+
+            var res = m.message.text.result;
+
+            if(res === 'start'){
+                clearTimer();
+                startTimer();
+            }else if(res === 'stop'){
+                stopTimer();
+            }
         }
+
+
 
     };
 

@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'DJB Get Digital';
+    src: url("../fonts/DJBGetDigital.woff2") format('woff2'),
+        url("../fonts/DJBGetDigital.woff") format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -59,13 +67,72 @@ table{
     margin-top:50px;
 }
 
-div#timer{
+/*div#timer{*/
+    /*position:fixed;*/
+    /*margin-bottom:20px;*/
+    /*bottom:0;*/
+    /*left: 50%;*/
+    /*transform: translate(-50%, 0);*/
+/*}*/
+
+/*div#status_name {*/
+
+    /*z-index:999;*/
+    /*position:fixed;*/
+    /*bottom:0;*/
+    /*margin-bottom:150px;*/
+    /*left: 50%;*/
+    /*transform: translate(-50%, 0);*/
+
+/*}*/
+
+#timercontainer{
+    width:1100px;
     position:fixed;
     margin-bottom:20px;
     bottom:0;
     left: 50%;
     transform: translate(-50%, 0);
+      background-color: black;
+  color: limegreen;
+      border-radius: 20px;
+      padding: 15px;
+      font-size: 70px;
 }
+
+.sep{
+    float:left;
+        padding-top:20px;
+}
+
+#status_name {
+    float:left;
+        font-family: "Helvetica Neue";
+    /*max-width:1000px;*/
+    width:500px;
+     white-space: nowrap;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    padding-top:20px;
+}
+
+#timer {
+    float:right;
+    width:500px;
+
+  /*border-radius: 20px;*/
+}
+
+#timer span{
+    width:100px;
+    display: inline-block;
+}
+
+#timer {
+  font-family: 'DJB Get Digital';
+}
+
 
 .container h2{
     text-align:center;
@@ -99,9 +166,8 @@ tr{
     font-family: Helvetica, sans-serif;
     display:block;
     position: relative;
-	margin: 0 auto;
-	background-color: #fff;
-    margin-bottom:25px;
+    background-color: #fff;
+    margin: 0 auto 25px;
 }
 
 tr td:first-child{
@@ -113,6 +179,8 @@ tr td:last-child{
     width:30vw;
     padding-right:50px;
 }
+
+table tr:nth-of-type(1n+5) {display: none;}
 
 .effect
 {

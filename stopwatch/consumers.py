@@ -34,6 +34,19 @@ class LeaderboardConsumer(WebsocketConsumer):
             LeaderboardConsumer.t1.setDaemon(True)
             LeaderboardConsumer.t1.start()
 
+    def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+
+        async_to_sync(channel_layer.group_send)("leaderboard", {
+            "type": "name_message",
+            "text": {
+                "result": {
+                    'pid': text_data_json['text']['pid'],
+                    'name': text_data_json['text']['name']
+                },
+            }
+        })
+
     def disconnect(self, close_code):
         # Leave room group
         async_to_sync(self.channel_layer.group_discard)(
@@ -43,8 +56,13 @@ class LeaderboardConsumer(WebsocketConsumer):
         LeaderboardConsumer.stopped = True
 
     def poll_message(self,event):
-        # text_data_json = json.loads(event)
-        # message = text_data_json['message']
+
+        # Send message to room group
+        self.send(text_data=json.dumps({
+            'message': event
+        }))
+
+    def name_message(self,event):
 
         # Send message to room group
         self.send(text_data=json.dumps({
