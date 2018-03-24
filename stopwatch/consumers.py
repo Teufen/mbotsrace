@@ -80,7 +80,7 @@ class LeaderboardConsumer(WebsocketConsumer):
         #while True:
             result = poll_button(start)
 
-            start = not start
+            # start = not start
 
             # update frontend via websocket
             async_to_sync(channel_layer.group_send)("leaderboard", {
@@ -92,10 +92,12 @@ class LeaderboardConsumer(WebsocketConsumer):
 
             if result == 'start':
                 time.sleep(1.2)
+                start = False
                 print('Button pressed and started')
 
             if result == 'stop':
                 time.sleep(1.2)
+                start = True
                 print('Button pressed and stopped')
 
 
