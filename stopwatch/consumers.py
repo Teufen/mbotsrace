@@ -79,7 +79,9 @@ class LeaderboardConsumer(WebsocketConsumer):
         while LeaderboardConsumer.stopped == False:
         #while True:
             result = poll_button(start)
+
             start = not start
+
             # update frontend via websocket
             async_to_sync(channel_layer.group_send)("leaderboard", {
                 "type": "poll_message",
@@ -88,13 +90,18 @@ class LeaderboardConsumer(WebsocketConsumer):
                 }
             })
 
+            if result == 'start':
+                time.sleep(1.2)
+                print('Button pressed and started')
+
+            if result == 'stop':
+                time.sleep(1.2)
+                print('Button pressed and stopped')
+
 
 def poll_button(test):
     input_state = GPIO.input(18)
     if input_state == False:
-        time.sleep(1.2)
-        print('Button pressed')
-
         if test:
             print('send result: start')
             return 'start'
